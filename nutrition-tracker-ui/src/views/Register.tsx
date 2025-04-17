@@ -1,10 +1,8 @@
 import React from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { buttonStyle, textFieldStyle, pageContainer } from "../styles/styles";
-import { Link } from "react-router-dom";
 
-
-const Login = () => {
+const Register = () => {
   return (
     <Box sx={pageContainer}>
       <Paper
@@ -12,21 +10,20 @@ const Login = () => {
         sx={{ padding: 4, borderRadius: 3, width: 350, textAlign: "center", backgroundColor: "white" }}
       >
         <Typography variant="h5" mb={2}>
-          Logga in
+          Registrera dig
         </Typography>
         <form>
           <TextField fullWidth label="Användarnamn" variant="outlined" margin="normal" sx={textFieldStyle} />
+          <TextField fullWidth label="E-post" variant="outlined" margin="normal" sx={textFieldStyle} />
           <TextField fullWidth label="Lösenord" type="password" variant="outlined" margin="normal" sx={textFieldStyle} />
+          <TextField fullWidth label="Bekräfta lösenord" type="password" variant="outlined" margin="normal" sx={textFieldStyle} />
           <Button fullWidth variant="contained" sx={buttonStyle}>
-            Logga in
+            Registrera
           </Button>
         </form>
-        <Typography variant="body2" mt={2}>
-            Har du inget konto? <Link to="/register">Registrera dig här</Link>
-        </Typography>
       </Paper>
     </Box>
   );
 };
 
-export default Login;
+export default Register;
