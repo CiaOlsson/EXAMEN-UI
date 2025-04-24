@@ -2,8 +2,30 @@ import React from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { buttonStyle, textFieldStyle, pageContainer } from "../styles/styles";
 import { Link } from "react-router-dom";
+import api from "../api/axios";
+import { useForm } from "react-hook-form";
+
+interface LoginFormInput {
+  useremail: string;
+  password: string;
+}
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInput>();
+
+  const onSubmit = async (data: LoginFormInput) => {
+    try {
+      const response = await api.post("/login", data);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box sx={pageContainer}>
       <Paper
@@ -19,11 +41,19 @@ const Login = () => {
         <Typography variant="h5" mb={2}>
           Logga in
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             fullWidth
-            label="Användarnamn"
-            variant="outlined"
+            label="E-post"
+            {...register("useremail", {
+              required: "E-post krävs",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Ogiltig e-postadress",
+              },
+            })}
+            error={!!errors.useremail}
+            helperText={errors.useremail?.message}
             margin="normal"
             sx={textFieldStyle}
           />
@@ -31,11 +61,15 @@ const Login = () => {
             fullWidth
             label="Lösenord"
             type="password"
-            variant="outlined"
+            {...register("password", {
+              required: "Lösenord krävs",
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
             margin="normal"
             sx={textFieldStyle}
           />
-          <Button fullWidth variant="contained" sx={buttonStyle}>
+          <Button fullWidth type="submit" variant="contained" sx={buttonStyle}>
             Logga in
           </Button>
         </form>
