@@ -4,22 +4,25 @@ import { buttonStyle, textFieldStyle, pageContainer } from "../styles/styles";
 import api from "../api/axios";
 import { useForm } from "react-hook-form";
 
-interface SignUpFormInput {
+//Fixa vad som ska hända när användaren är skapad, tex rensa formuläret/hamna på login sidan. alternativt loggas in direkt? 
+// nice to have: senare kanske jag ville fixa så man får ett mail? 
+// gör länk till login?
+interface SignupFormInput {
   username: string;
-  email: string;
+  useremail: string;
   password: string;
   confirmPassword: string;
 }
 
-const SignUp = () => {
+const Signup = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<SignUpFormInput>();
+  } = useForm<SignupFormInput>();
 
-  const onSubmit = async (data: SignUpFormInput) => {
+  const onSubmit = async (data: SignupFormInput) => {
     try {
       const { confirmPassword, ...payload } = data;
       const response = await api.post("/signup", payload);
@@ -58,15 +61,15 @@ const SignUp = () => {
           <TextField
             fullWidth
             label="E-post"
-            {...register("email", {
+            {...register("useremail", {
               required: "E-post krävs",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                 message: "Ogiltig e-postadress",
               },
             })}
-            error={!!errors.email}
-            helperText={errors.email?.message}
+            error={!!errors.useremail}
+            helperText={errors.useremail?.message}
             //variant="outlined"
             margin="normal"
             sx={textFieldStyle}
@@ -112,4 +115,6 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+
+
+export default Signup;
