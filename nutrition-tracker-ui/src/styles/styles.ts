@@ -17,7 +17,7 @@ export const textFieldStyle: SxProps<Theme> = {
 };
 
 // Container-styling för sidor
-export const pageContainer: SxProps<Theme> = {
+export const pageContainerSecondary: SxProps<Theme> = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -26,4 +26,50 @@ export const pageContainer: SxProps<Theme> = {
   backgroundSize: "cover", 
   backgroundPosition: "center", 
   backgroundRepeat: "no-repeat", 
+};
+
+// export const pageContainerPrimary: SxProps<Theme> = {
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   height: "100vh",
+//   backgroundImage: `url(${backgroundImage})`, 
+//   backgroundSize: "cover", 
+//   backgroundPosition: "center", 
+//   backgroundRepeat: "no-repeat", 
+// };
+export const pageContainer = {
+  display: "flex",
+  alignItems: "center",
+  width: "100vw",
+  minHeight: "100vh",
+  overflow: "auto",
+};
+
+export const statCardStyle = { //används inte någonstans just nu
+  backgroundColor: "#fff",
+  padding: 3,
+  borderRadius: 2,
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+  textAlign: "center",
+};
+
+//Style för sidebaren. 
+export const sidebarStyle = {
+  position: "sticky",
+  top: 0,
+  width: 320,
+  height: "100vh",
+  backgroundColor: "#fff",
+  display: "flex",
+  justifyContent: "center",
+  p: 3,
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)"
+};
+
+//Style för mätarna
+export const progressBarStyle = {
+  marginTop: 2,
+  height: 10,
+  borderRadius: 5,
 };

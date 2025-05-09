@@ -1,6 +1,10 @@
 import React from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
-import { buttonStyle, textFieldStyle, pageContainer } from "../styles/styles";
+import {
+  buttonStyle,
+  textFieldStyle,
+  pageContainerSecondary,
+} from "../styles/styles";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 import { useForm } from "react-hook-form";
@@ -27,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <Box sx={pageContainer}>
+    <Box sx={pageContainerSecondary}>
       <Paper
         elevation={5}
         sx={{
