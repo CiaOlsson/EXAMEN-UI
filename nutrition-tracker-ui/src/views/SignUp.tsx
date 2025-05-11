@@ -1,18 +1,24 @@
 //import React, { useState } from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
-import { buttonStyle, textFieldStyle, pageContainer } from "../styles/styles";
+import {
+  buttonStyle,
+  textFieldStyle,
+  pageContainerSecondary,
+} from "../styles/styles";
 import api from "../api/axios";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
 
-//Fixa vad som ska hända när användaren är skapad, tex rensa formuläret/hamna på login sidan. alternativt loggas in direkt? 
-// nice to have: senare kanske jag ville fixa så man får ett mail? 
-// gör länk till login?
+// nice to have: senare kanske jag ville fixa så man får ett mail?
+
 interface SignupFormInput {
   username: string;
   useremail: string;
   password: string;
   confirmPassword: string;
 }
+
+const navigate = useNavigate();
 
 const Signup = () => {
   const {
@@ -27,13 +33,14 @@ const Signup = () => {
       const { confirmPassword, ...payload } = data;
       const response = await api.post("/signup", payload);
       console.log(response);
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <Box sx={pageContainer}>
+    <Box sx={pageContainerSecondary}>
       <Paper
         elevation={5}
         sx={{
@@ -110,11 +117,12 @@ const Signup = () => {
             Registrera
           </Button>
         </form>
+        <Typography variant="body2" mt={2}>
+          <Link to="/login">Logga in här</Link>
+        </Typography>
       </Paper>
     </Box>
   );
 };
-
-
 
 export default Signup;
