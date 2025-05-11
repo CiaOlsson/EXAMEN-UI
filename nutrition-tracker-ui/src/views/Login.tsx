@@ -1,11 +1,10 @@
-import React from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import {
   buttonStyle,
   textFieldStyle,
   pageContainerSecondary,
 } from "../styles/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import api from "../api/axios";
 import { useForm } from "react-hook-form";
 
@@ -21,12 +20,17 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginFormInput>();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: LoginFormInput) => {
     try {
       const response = await api.post("/login", data);
-      console.log(response);
+      const token = response.data;
+      localStorage.setItem("token", token);
+      console.log("successful login", response);
+      navigate("/overview");
     } catch (error) {
-      console.error(error);
+      console.error("Login failed", error);
     }
   };
 
@@ -78,7 +82,7 @@ const Login = () => {
           </Button>
         </form>
         <Typography variant="body2" mt={2}>
-          <Link to="/register">Registrera dig här</Link>
+          <Link to="/signup">Registrera dig här</Link>
         </Typography>
       </Paper>
     </Box>
