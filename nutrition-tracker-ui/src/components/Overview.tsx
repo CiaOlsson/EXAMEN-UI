@@ -13,9 +13,12 @@ import {
   Alert,
 } from "@mui/material";
 import { pageContainer, progressBarStyle } from "../styles/styles";
-import Sidebar from "../components/Sidebar";
 import dayjs, { Dayjs } from "dayjs";
 import api from "../api/axios";
+
+interface OverviewProps {
+  selectedDate: Dayjs;
+}
 
 type IntakeVm = {
   name: string;
@@ -35,8 +38,7 @@ type IntakeVm = {
   vitamin_K: number;
 };
 
-const Overview = () => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+const Overview = ({selectedDate}: OverviewProps) => {
   const [todayMeals, setTodayMeals] = useState<IntakeVm[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,8 +70,6 @@ const Overview = () => {
     value != null ? value.toFixed(decimals) : "-";
 
   return (
-    <Box sx={pageContainer}>
-      <Sidebar selectedDate={selectedDate} onDateChange={setSelectedDate} />
       <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
         <Paper
           sx={{
@@ -180,7 +180,6 @@ const Overview = () => {
           </TableContainer>
         </Paper>
       </Box>
-    </Box>
   );
 };
 

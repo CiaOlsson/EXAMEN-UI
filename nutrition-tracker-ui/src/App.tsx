@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./styles/theme";
 import Login from "./views/Login";
 import Signup from "./views/SignUp";
-import Overview from "./views/Overview";
+import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"
 
 
@@ -16,10 +16,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
-            path="/overview"
+            path="/dashboard"
             element={
               <ProtectedRoute>
-                <Overview />
+                <Dashboard />
               </ProtectedRoute>
             }
           />

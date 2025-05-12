@@ -18,8 +18,6 @@ interface SignupFormInput {
   confirmPassword: string;
 }
 
-const navigate = useNavigate();
-
 const Signup = () => {
   const {
     register,
@@ -27,6 +25,8 @@ const Signup = () => {
     formState: { errors },
     watch,
   } = useForm<SignupFormInput>();
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data: SignupFormInput) => {
     try {
