@@ -61,8 +61,6 @@ const Signup = () => {
             {...register("username", { required: "Användarnamn krävs" })}
             error={!!errors.username}
             helperText={errors.username?.message}
-            //variant="outlined"
-            margin="normal"
             sx={textFieldStyle}
           />
           <TextField
@@ -77,8 +75,6 @@ const Signup = () => {
             })}
             error={!!errors.useremail}
             helperText={errors.useremail?.message}
-            //variant="outlined"
-            margin="normal"
             sx={textFieldStyle}
           />
           <TextField
@@ -94,8 +90,6 @@ const Signup = () => {
             error={!!errors.password}
             helperText={errors.password?.message}
             type="password"
-            //variant="outlined"
-            margin="normal"
             sx={textFieldStyle}
           />
           <TextField
@@ -109,8 +103,6 @@ const Signup = () => {
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
             type="password"
-            //variant="outlined"
-            margin="normal"
             sx={textFieldStyle}
           />
           <Button fullWidth type="submit" variant="contained" sx={buttonStyle}>
