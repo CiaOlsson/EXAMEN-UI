@@ -62,7 +62,6 @@ const Login = () => {
             })}
             error={!!errors.useremail}
             helperText={errors.useremail?.message}
-            margin="normal"
             sx={textFieldStyle}
           />
           <TextField
@@ -74,7 +73,6 @@ const Login = () => {
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
-            margin="normal"
             sx={textFieldStyle}
           />
           <Button fullWidth type="submit" variant="contained" sx={buttonStyle}>

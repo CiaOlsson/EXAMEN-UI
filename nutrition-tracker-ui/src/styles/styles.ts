@@ -12,7 +12,9 @@ export const buttonStyle: SxProps<Theme> = {
 // Grundläggande styling för alla text fält
 export const textFieldStyle: SxProps<Theme> = {
   "& .MuiOutlinedInput-root": {
-    borderRadius: 8,
+    mb: 2,
+    borderRadius: 7,
+    pl: 1
   },
 };
 
@@ -26,6 +28,15 @@ export const pageContainerSecondary: SxProps<Theme> = {
   backgroundSize: "cover", 
   backgroundPosition: "center", 
   backgroundRepeat: "no-repeat", 
+};
+
+export const dashboardPaperStyle: SxProps<Theme> = {
+  ml: "0px",
+  padding: 6,
+  width: 1300,
+  maxWidth: "70vw",
+  height: "90vh",
+  overflowY: "auto",          
 };
 
 // export const pageContainerPrimary: SxProps<Theme> = {
