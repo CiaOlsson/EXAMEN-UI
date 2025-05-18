@@ -39,61 +39,91 @@ type IntakeVm = {
 
 const Overview = ({selectedDate}: OverviewProps) => {
   const [todayMeals, setTodayMeals] = useState<IntakeVm[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMeals = async () => {
       try {
         const formattedDate = selectedDate.format("YYYY-MM-DD");
-        const response = await api.get(`/api/overview?date=${formattedDate}`);
+        const response = await api.get(`/api/dashboard?date=${formattedDate}`);
         setTodayMeals(response.data);
       } catch (err) {
         console.error(err);
-        setError("Failed to load meals");
       }
     };
 
     fetchMeals();
   }, [selectedDate]);
 
-  // detta om jag vill ha felmeddelande någonstans, vill nog lägga felmeddelande i en toast? 
-  // {
-  //   error && (
-  //     <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-  //       {error}
-  //     </Typography>
-  //   );
-  // }
+  // Vill jag ha felmeddelande någonstans, vill nog lägga felmeddelande i en toast? 
+
 
   const formatNumber = (value: number | null | undefined, decimals = 2) =>
     value != null ? value.toFixed(decimals) : "-";
 
+  const totalValues = todayMeals.reduce(
+    (acc, item) => {
+      acc.energy_kcal += item.energy_kcal ?? 0;
+      acc.protein += item.protein ?? 0;
+      acc.fat += item.fat ?? 0;
+      acc.carbohydrates += item.carbohydrates ?? 0;
+      acc.fiber += item.fiber ?? 0;
+      acc.sugarsTotal += item.sugarsTotal ?? 0;
+      acc.salt += item.salt ?? 0;
+      acc.vitamin_A += item.vitamin_A ?? 0;
+      acc.vitamin_B6 += item.vitamin_B6 ?? 0;
+      acc.vitamin_B12 += item.vitamin_B12 ?? 0;
+      acc.vitamin_C += item.vitamin_C ?? 0;
+      acc.vitamin_D += item.vitamin_D ?? 0;
+      acc.vitamin_E += item.vitamin_E ?? 0;
+      acc.vitamin_K += item.vitamin_K ?? 0;
+      return acc;
+    },
+    {
+      energy_kcal: 0,
+      protein: 0,
+      fat: 0,
+      carbohydrates: 0,
+      fiber: 0,
+      sugarsTotal: 0,
+      salt: 0,
+      vitamin_A: 0,
+      vitamin_B6: 0,
+      vitamin_B12: 0,
+      vitamin_C: 0,
+      vitamin_D: 0,
+      vitamin_E: 0,
+      vitamin_K: 0,
+    }
+  );
+  
+
   return (
     <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
-      <Paper
-        sx={dashboardPaperStyle}
-      >
+      <Paper sx={dashboardPaperStyle}>
         <Typography variant="h5" gutterBottom>
-          Today's Intake
+          Dagens näringsintag
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
           {[
             {
-              label: "Calories",
-              value: 100,
-              goal: 200, //lägg till logik här istället för denna mock data.
+              label: "Energi",
+              unit: "Kcal",
+              value: totalValues.energy_kcal,
+              goal: 2000,
             },
             {
               label: "Protein",
-              value: 100,
-              goal: 200,
+              unit: "g",
+              value: totalValues.protein,
+              goal: 125,
             },
             {
-              label: "Carbs",
-              value: 100,
-              goal: 200,
+              label: "Kolhydrater",
+              unit: "g",
+              value: totalValues.carbohydrates,
+              goal: 225,
             },
-            { label: "Fat", value: 100, goal: 200 },
+            { label: "Fett", unit: "g", value: totalValues.fat, goal: 67 },
           ].map((nutrient) => (
             <Box
               key={nutrient.label}
@@ -103,7 +133,7 @@ const Overview = ({selectedDate}: OverviewProps) => {
               }}
             >
               <Typography variant="h6">
-                {nutrient.label}: {nutrient.value}
+                {nutrient.label}: {formatNumber(nutrient.value)} {nutrient.unit}
               </Typography>
               <LinearProgress
                 variant="determinate"
@@ -111,13 +141,13 @@ const Overview = ({selectedDate}: OverviewProps) => {
                 sx={progressBarStyle}
               />
               <Typography variant="body2" color="textSecondary">
-                Planned: {nutrient.goal}
+                rekommenderat: {nutrient.goal} {nutrient.unit} / dag
               </Typography>
             </Box>
           ))}
         </Box>
         <Typography variant="h5" gutterBottom sx={{ mt: 3 }}>
-          Today's Added Meals
+          Dagens måltider
         </Typography>
         <TableContainer>
           <Table aria-label="nutrients table">
@@ -132,12 +162,12 @@ const Overview = ({selectedDate}: OverviewProps) => {
                 >
                   Nutrient
                 </TableCell>
-                <TableCell align="right">Energy</TableCell>
+                <TableCell align="right">Energi</TableCell>
                 <TableCell align="right">Protein</TableCell>
-                <TableCell align="right">Fat</TableCell>
-                <TableCell align="right">Carbohydrates</TableCell>
+                <TableCell align="right">Fett</TableCell>
+                <TableCell align="right">Kolhydrater</TableCell>
                 <TableCell align="right">Fiber</TableCell>
-                <TableCell align="right">SugarsTotal</TableCell>
+                <TableCell align="right">Socker</TableCell>
                 <TableCell align="right">Salt</TableCell>
                 <TableCell align="right">A</TableCell>
                 <TableCell align="right">B6</TableCell>
@@ -152,7 +182,48 @@ const Overview = ({selectedDate}: OverviewProps) => {
               <TableRow>
                 <TableCell>
                   <strong>Total</strong>
-                  {/*Här vill jag eventuellt ha totalen för varje näringsvärde.*/}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.energy_kcal)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.protein)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.fat)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.carbohydrates)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.fiber)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.sugarsTotal)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.salt)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_A)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_B6)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_B12)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_C)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_D)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_E)}
+                </TableCell>
+                <TableCell align="right">
+                  {formatNumber(totalValues.vitamin_K)}
                 </TableCell>
               </TableRow>
               {todayMeals.map((item, index) => (
