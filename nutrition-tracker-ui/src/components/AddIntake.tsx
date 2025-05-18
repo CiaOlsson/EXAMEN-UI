@@ -17,7 +17,7 @@ const AddIntake = ({ food, selectedDate, onSubmit, onCancel }: AddIntakeProps) =
 console.log(food)
   const handleSubmit = async () => {
     try {
-      await api.post("/api/overview", {
+      await api.post("/api/dashboard", {
         foodId: food.foodId,
         foodAmount: amount,
         dateOfIntake: selectedDate.format("YYYY-MM-DD"),
