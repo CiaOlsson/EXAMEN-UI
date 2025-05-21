@@ -1,5 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
-import backgroundImage from "../assets/AdobeStock_175063550_Preview.jpeg"
+import backgroundImage from "../assets/fresh_fruits.jpg"
 
 // Grundläggande styling för alla knappar
 export const buttonStyle: SxProps<Theme> = {
@@ -49,6 +49,7 @@ export const dashboardPaperStyle: SxProps<Theme> = {
 //   backgroundPosition: "center", 
 //   backgroundRepeat: "no-repeat", 
 // };
+
 export const pageContainer = {
   display: "flex",
   alignItems: "center",
